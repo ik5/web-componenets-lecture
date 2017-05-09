@@ -1,0 +1,448 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Web Components</title>
+
+    <meta name="apple-mobile-web-app-capable" content="yes" >
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" >
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <link rel="stylesheet" href="reveal.js/css/reveal.css">
+    <link rel="stylesheet" href="reveal.js/css/theme/serif.css" id="theme">
+
+    <!-- Theme used for syntax highlighting of code -->
+    <link rel="stylesheet" href="reveal.js/lib/css/zenburn.css">
+
+    <!--[if lt IE 9]>
+    <script src="reveal.js/lib/js/html5shiv.js"></script>
+    <![endif]-->
+    <style>
+      img: {
+        border: 0;
+      }
+      .title-shadow {
+          color: #afafaf !important;
+          text-shadow:  3px 3px 0 #000,
+                        -1px -1px 0 #000,
+                        1px -1px 0 #000,
+                        -1px 1px 0 #000,
+                        1px 1px 0 #000 !important;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="reveal">
+      <div class="slides">
+        <section data-background-image="img/puzzle.jpg">
+          <h1 class="title-shadow">Web Components</h1>
+          <p  class="title-shadow">Last updated: April 2017</p>
+        </section>
+
+        <section>
+          <section>
+            <h3>What is a component?</h3>
+          </section>
+          <section>
+            <p>
+              There is sub paradigm in programming named<br>
+              "<q>Component-Based Development (CBD)</q>",<br>
+              that takes chunks of code and makes it reusable.
+            </p>
+          </section>
+          <section>
+            <p>
+              The idea is to use many parts of code that togather can create a bigger solution.
+            </p>
+          </section>
+          <section>
+            <p>So it's like Micro-servies ?</p>
+            <p class="fragment fade-in">Nope!</p>
+          </section>
+          <section>
+            <p>Micro-services are parts of actual programs that do one things that togather creates a logic</p>
+          </section>
+          <section>
+            <p>Components cannot be stand-alone, and must be used inside a program</p>
+          </section>
+        </section>
+        <section>
+          <section data-background-image="img/douglas_adams.jpg" data-background-size="15%"
+            data-background-position="bottom right">
+            <h2>History of CBD</h2>
+            <blockquote>
+              <p>In the beginning the Universe was created.<br>
+                This has made a lot of people very angry and been widely
+                regarded as a bad move.</p>
+            </blockquote>
+            <cite>Douglas Adams</cite>
+
+          </section>
+          <section>
+            <p>The idea started in the late 60's, by Douglas McIlroy who written a document for NATO.</p>
+            <p><a href="https://en.wikipedia.org/wiki/Component-based_software_engineering">From Wikiperida</a></p>
+          </section>
+          <section>
+            <p>In 86, the Objective-C language created support for componenet based programming interface.</p>
+          </section>
+          <section>
+            <p>In 91, IBM created an environment that uses component based module (known as System Object Model or SOM)
+              - Shared library (DSO) for reusable code.<br> Later also DSOM (distributed SOM) </p>
+          </section>
+          <section>
+            <h3>Before The web</h3>
+            <img src="img/lazarus.png" alt="lzarus">
+          </section>
+        </section>
+        <section>
+          <section>
+            <h2>Web Componenets</h2>
+          </section>
+
+          <section>
+            <ul>
+              <li><a href="https://www.w3.org/standards/techs/components">Standard by W3C</a>.</li>
+              <li class="fragment fade-in">
+                Contains four types of main elements:
+                <ol>
+                  <li class="fragment fade-in">Shadow DOM</li>
+                  <li class="fragment fade-in">Custom Elements</li>
+                  <li class="fragment fade-in">Templates</li>
+                  <li class="fragment fade-in">HTML Imports</li>
+                </ol>
+              </li>
+              <li class="fragment fade-in">Still in draft mode (except for templates).</li>
+            </ul>
+          </section>
+          <section>
+            <h3>Shadow DOM</h3>
+          </section>
+          <section>
+            <p>Imagine that you have a data that changes a lot.</p>
+            <p>It is a bad advice to constantly change the entire DOM when the data changes.</p>
+          </section>
+          <section>
+            <h3>Why?</h3>
+          </section>
+          <section>
+            <p>A lot of rendering, changing a lot of lines, will result in very slow and endless pain to the user.</p>
+            <img class="fragment fade-in" alt="" src="img/loading.gif">
+          </section>
+          <section>
+            <img alt="chrome hangs" src="img/too_long.png">
+          </section>
+          <section>
+            <p>Shadow DOM, provides an encapsulation of CSS and DOM, allowing to make changes, and returns the
+              result back to the main DOM. </p>
+          </section>
+          <section>
+            <h3>Example:</h3>
+            <pre><code data-trim class="javascript">
+  // Create shadow DOM
+  var shadow = document.querySelector(&#039;#hostElement&#039;)
+    .attachShadow({mode: &#039;open&#039;});
+  // Add some text to shadow DOM
+  shadow.innerHTML = &#039;&lt;span&gt;Here is some new text&lt;/span&gt;&#039;
+  // Add some CSS to make the text red
+  shadow.innerHTML += &#039;&lt;style&gt;span { color: red; }&lt;/style&gt;&#039;
+            </code></pre>
+            <a href="https://developer.mozilla.org/en-US/docs/Web/Web_Components/Shadow_DOM">From MDN</a>
+          </section>
+          <section>
+            <h2>Custom Elements</h2>
+          </section>
+          <section>
+            <p>Allowing to create custom HTML elements, that can have different properties attached on runtime, unlike
+              the custom tags that was added to HTML5.</p>
+          </section>
+          <section>
+            <p>For example, it is possible to attch what the component will do when it is first added to the DOM, and
+              different action when it is removed.</p>
+          </section>
+          <section>
+            <h3>Example:</h3>
+            <pre><code data-trim class="html">
+If nothing appeared below, then your browser does not support Custom Elements yet.
+&lt;x-product data-name=&quot;Ruby&quot; data-img=&quot;https://s3-us-west-2.amazonaws.com/s.cdpn.io/4621/ruby.png&quot; data-url=&quot;http://example.com/1&quot;&gt;&lt;/x-product&gt;
+&lt;x-product data-name=&quot;JavaScript&quot; data-img=&quot;https://s3-us-west-2.amazonaws.com/s.cdpn.io/4621/javascript.png&quot; data-url=&quot;http://example.com/2&quot;&gt;&lt;/x-product&gt;
+&lt;x-product data-name=&quot;Python&quot; data-img=&quot;https://s3-us-west-2.amazonaws.com/s.cdpn.io/4621/python.png&quot; data-url=&quot;http://example.com/3&quot;&gt;&lt;/x-product&gt;
+              </code></pre>
+          </section>
+          <section>
+            <h3>Example (continue):</h3>
+            <pre><code data-trim class="javascript">
+// Create a class for the element
+class XProduct extends HTMLElement {
+  constructor() {
+    // Always call super first in constructor
+    super();
+
+    // Create a shadow root
+    var shadow = this.attachShadow({mode: 'open'});
+
+    // Create a standard img element and set it's attributes.
+    var img = document.createElement('img');
+    img.alt = this.getAttribute('data-name');
+    img.src = this.getAttribute('data-img');
+    img.width = '150';
+    img.height = '150';
+    img.className = 'product-img';
+
+    // Add the image to the shadow root.
+    shadow.appendChild(img);
+
+    // Add an event listener to the image.
+    img.addEventListener('click', () => {
+      window.location = this.getAttribute('data-url');
+    });
+
+    // Create a link to the product.
+    var link = document.createElement('a');
+    link.innerText = this.getAttribute('data-name');
+    link.href = this.getAttribute('data-url');
+    link.className = 'product-name';
+
+    // Add the link to the shadow root.
+    shadow.appendChild(link);
+  }
+
+  // Monitor the 'name' attribute for changes.
+  static get observedAttributes() {return ['name']; }
+
+  // Respond to attribute changes.
+  attributeChangedCallback(attr, oldValue, newValue) {
+    if (attr == 'name') {
+      this.textContent = `Hello, ${newValue}`;
+    }
+  }
+}
+
+// Define the new element
+customElements.define('x-product', XProduct);
+            </code></pre>
+          </section>
+          <section>
+            <h3>Example (continue):</h3>
+            <pre><code data-trim class="css">
+body {
+  background: #F7F7F7;
+}
+
+x-product {
+  display: inline-block;
+  float: left;
+  margin: 0.5em;
+  border-radius: 3px;
+  background: #FFF;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.25);
+  font-family: Helvetica, arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+x-product::slotted(.product-img) {
+  cursor: pointer;
+  background: #FFF;
+  margin: 0.5em;
+}
+
+x-product::slotted(.product-name) {
+  display: block;
+  text-align: center;
+  text-decoration: none;
+  color: #08C;
+  border-top: 1px solid #EEE;
+  font-weight: bold;
+  padding: 0.75em 0;
+}
+            </code></pre>
+          </section>
+          <section>
+            <h3>Place Holder</h3>
+            <p>There is a tag name <a
+                href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/slot">&lt;slot&gt;</a>. It is a place holder to change content on runtime inside a component</p>
+            <img class="fragment fade-in" src="img/element-details.png" alt="replacing elements using slots">
+          </section>
+          <section>
+            <h2>Templates</h2>
+            <p>
+              The HTML &lt;template&gt; element is a mechanism for holding client-side content that is not to be rendered when a page is loaded but may subsequently be instantiated during runtime using JavaScript.
+            </p>
+          </section>
+          <section>
+            <p>
+              Think of a template as a content fragment that is being stored for subsequent use in the document.<br>
+              While the parser doesa process the contents of the &lt;template&gt; element while loading the page, <br>
+              it does so only to ensure that those contents are valid; the element's contents are not rendered, however.
+            </p>
+          </section>
+          <section>
+            <h3>Example</h3>
+            <pre><code data-trim class="html">
+&lt;table id=&quot;producttable&quot;&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;td&gt;UPC_Code&lt;/td&gt;
+      &lt;td&gt;Product_Name&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;!-- existing data could optionally be included here --&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;template id=&quot;productrow&quot;&gt;
+  &lt;tr&gt;
+    &lt;td class=&quot;record&quot;&gt;&lt;/td&gt;
+    &lt;td&gt;&lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/template&gt;
+            </code></pre>
+          </section>
+          <section>
+            <h3>Example (continue):</h3>
+            <pre><code data-trim class="javascript">
+// Test to see if the browser supports the HTML template element by checking
+// for the presence of the template element's content attribute.
+if ('content' in document.createElement('template')) {
+
+  // Instantiate the table with the existing HTML tbody
+  // and the row with the template
+  var t = document.querySelector('#productrow'),
+  td = t.content.querySelectorAll("td");
+  td[0].textContent = "1235646565";
+  td[1].textContent = "Stuff";
+
+  // Clone the new row and insert it into the table
+  var tb = document.querySelector("tbody");
+  var clone = document.importNode(t.content, true);
+  tb.appendChild(clone);
+  
+  // Create a new row
+  td[0].textContent = "0384928528";
+  td[1].textContent = "Acme Kidney Beans";
+
+  // Clone the new row and insert it into the table
+  var clone2 = document.importNode(t.content, true);
+  tb.appendChild(clone2);
+
+} else {
+  // Find another way to add the rows to the table because 
+  // the HTML template element is not supported.
+}
+            </code></pre>
+          </section>
+          <section>
+            <h2>HTML Imports</h2>
+          </section>
+          <section>
+            <pre><code data-trim class="html">
+&lt;link rel="import" href="myfile.html"&gt;
+            </code></pre>
+          </section>
+        </section>
+        <section>
+          <section>
+            <h1>Can we use it now?</h1>
+          </section>
+          <section>
+            <p>Yes, and No</p>
+          </section>
+          <section>
+            <p>It's still on draft, and not all browser supports all elements of the draft.</p>
+          </section>
+          <section>
+            <p>But there are two main JS libraries that provide implementation for it</p>
+          </section>
+          <section>
+            <a href="https://www.polymer-project.org/">
+            <img src="img/Polymer_Project_logo.png" alt="">
+            <br>
+            Google Polymer</a>
+          </section>
+          <section>
+            <a href="http://bosonic.github.io/">
+              <img src="img/bosonic_logo_big.png" alt="">
+              <br>
+              Bosonic</a>
+          </section>
+        </section>
+        <section>
+          <h1>FIN.</h1>
+          <blockquote>
+            <p>It is not the fall that kills you.<br> It's the sudden stop at the end.</p>
+          </blockquote>
+            <cite>Douglas Adams</cite>
+        </section>
+      </div>
+    </div>
+
+    <script src="reveal.js/lib/js/head.min.js"></script>
+    <script src="reveal.js/js/reveal.js"></script>
+    <script>
+      // Full list of configuration options available here:
+      // https://github.com/hakimel/reveal.js#configuration
+    Reveal.initialize({
+      // Display controls in the bottom right corner
+      controls: true,
+      // Display a presentation progress bar
+      progress: true,
+      // Push each slide change to the browser history
+      history: true,
+      // Enable keyboard shortcuts for navigation
+      keyboard: true,
+      // Enable touch events for navigation
+      touch: true,
+      // Enable the slide overview mode
+      overview: true,
+      // Vertical centering of slides
+      center: true,
+      // Loop the presentation
+      loop: false,
+      // Change the presentation direction to be RTL
+      rtl: false,
+      // Number of milliseconds between automatically proceeding to the
+      // next slide, disabled when set to 0, this value can be overwritten
+      // by using a data-autoslide attribute on your slides
+      autoSlide: 0,
+      // Enable slide navigation via mouse wheel
+      mouseWheel: false,
+      // Transition style
+      transition: 'zoom', //  none/fade/slide/convex/concave/zoom
+      // Transition speed
+      transitionSpeed: 'default', // default/fast/slow
+      // Transition style for full page backgrounds
+      backgroundTransition: 'fade', // none/fade/slide/convex/concave/zoom
+
+      width: 1024,
+      height: 768,
+      margin: 0.1,
+      minScale: 0.2,
+      maxScale: 1.5,
+      viewDistance: 3,
+
+      // Randomizes the order of slides each time the presentation loads
+      shuffle: false,
+      dependencies: [
+        // Cross-browser shim that fully implements classList - https://github.com/eligrey/classList.js/
+        { src: 'reveal.js/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+
+        // Interpret Markdown in <section> elements
+        { src: 'reveal.js/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+        { src: 'reveal.js/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+
+        // Syntax highlight for <code> elements
+        { src: 'reveal.js/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+
+        // Zoom in and out with Alt+click
+        { src: 'reveal.js/plugin/zoom-js/zoom.js', async: true },
+
+        // Speaker notes
+        { src: 'reveal.js/plugin/notes/notes.js', async: true },
+
+      ],
+
+    });
+
+    </script>
+  </body>
+</html>
